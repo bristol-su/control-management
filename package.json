@@ -1,7 +1,8 @@
 {
-  "name": "control-spa",
+  "name": "@bristol-su/control-mamangement",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

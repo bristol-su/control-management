@@ -31,4 +31,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#control-app')
+}).$mount('#control-management')
