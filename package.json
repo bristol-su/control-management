@@ -1,5 +1,5 @@
 {
-  "name": "@bristol-su/control-mamangement",
+  "name": "@bristol-su/control-manangement",
   "version": "0.1.0",
   "private": false,
   "publishConfig": { "registry": "https://npm.pkg.github.com/" }
