@@ -6,7 +6,7 @@
                     id="position"
                     v-model="position_selected"
             >
-                <option :value="item.data.id" :key="item.id" v-for="item in positions">
+                <option :value="item.id" :key="item.id" v-for="item in positions">
                     {{ item.data.name }}
                 </option>
             </b-form-select>

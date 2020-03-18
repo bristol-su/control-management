@@ -6,7 +6,7 @@
                     id="group"
                     v-model="group_selected"
             >
-                <option :value="item.data.id" :key="item.data.id" v-for="item in groups">
+                <option :value="item.id" :key="item.id" v-for="item in groups">
                     {{ item.data.name }}
                 </option>
             </b-form-select>
