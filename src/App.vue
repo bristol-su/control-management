@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="control-app">
         <b-container>
             <b-row style="margin-top: 15px; margin-bottom: 15px;">
                 <b-col>
@@ -47,7 +47,7 @@
 </template>
 
 <style>
-    #app {
+    #control-app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
