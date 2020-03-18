@@ -1,9 +1,13 @@
 {
-  "name": "@bristol-su/control-manangement",
+  "name": "@bristol-su/control-management",
   "version": "0.1.0",
   "private": false,
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bristol-su/control-management.git"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,7 +16,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@bristol-su/control-js-api-client": "^1.0.0",
+    "@bristol-su/control-js-api-client": "1.0.4",
     "awesome-notifications": "^3.1.0",
     "bootstrap-vue": "^2.7.0",
     "core-js": "^3.6.4",
