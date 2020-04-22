@@ -3,8 +3,6 @@ import axios from "axios";
 
 class ControlService {
 
-    control;
-
     createService() {
         let apiUrl = "";
         if(process.env.VUE_APP_CONTROL_API_URL !== undefined) {
