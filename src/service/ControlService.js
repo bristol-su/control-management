@@ -9,6 +9,8 @@ class ControlService {
             apiUrl = process.env.VUE_APP_CONTROL_API_URL
         } else if(process.env.MIX_CONTROL_API_URL !== undefined) {
             apiUrl = process.env.MIX_CONTROL_API_URL;
+        } else if(window !== undefined && Object.prototype.hasOwnProperty.call(window, 'controlApiUrl')) {
+            apiUrl = window.controlApiUrl;
         }
 
         this.control = new api(apiUrl, axios);
