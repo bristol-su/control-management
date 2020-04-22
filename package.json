@@ -1,6 +1,6 @@
 {
     "name": "@bristol-su/control-management",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "private": false,
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
@@ -16,10 +16,10 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
-        "@bristol-su/control-js-api-client": "^1.0.4",
-        "awesome-notifications": "^3.1.0",
+        "@bristol-su/control-js-api-client": "^1.1.0",
+        "awesome-notifications": "^3.1.1",
         "axios": "^0.19.2",
-        "bootstrap-vue": "^2.11.0",
+        "bootstrap-vue": "^2.12.0",
         "core-js": "^3.6.5",
         "font-awesome": "^4.7.0",
         "lodash": "^4.17.15",
@@ -27,7 +27,7 @@
         "nprogress": "^0.2.0",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
-        "vuex": "^3.1.2"
+        "vuex": "^3.2.0"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.2.0",
