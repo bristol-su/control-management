@@ -1,5 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import "vue-select/src/scss/vue-select.scss";
+import "vue-select/dist/vue-select.css";
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
