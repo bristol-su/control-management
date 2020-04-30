@@ -1,5 +1,5 @@
 <template>
-    <b-table :fields="fields" :items="roles" :busy="loading">
+    <b-table small :fields="fields" :items="roles" :busy="loading">
         <template v-slot:top-row>
             <slot name="top-row"></slot>
         </template>
@@ -16,24 +16,26 @@
         </template>
 
         <template v-slot:cell(actions)="data">
-            <b-button
-                size="sm"
-                variant="outline-secondary"
-                @click="$router.push({ name: 'role', params: { roleId: data.item.id }})">
-                View
-            </b-button>
+            <v-button-view
+                @view="$router.push({ name: 'role', params: { roleId: data.item.id }})">
+            </v-button-view>
+            <v-button-delete :delete-text="deleteText" v-if="deletable" @delete="$emit('delete', data.item.id)">
+
+            </v-button-delete>
         </template>
     </b-table>
 </template>
 
 <script>
     import moment from "moment";
-    import PositionName from "../common/PositionName";
-    import GroupName from "../common/GroupName";
+    import PositionName from "../common/VPositionName";
+    import GroupName from "../common/VGroupName";
+    import VButtonView from "../common/VButtonView";
+    import VButtonDelete from "../common/VButtonDelete";
 
     export default {
         name: "RoleTable",
-        components: {GroupName, PositionName},
+        components: {VButtonDelete, VButtonView, GroupName, PositionName},
         props: {
             roles: {
                 type: Array,
@@ -42,10 +44,17 @@
                 }
             },
             loading: {
-                props: {
-                    type: Boolean,
-                    default: false
-                }
+                type: Boolean,
+                default: false
+            },
+            deletable: {
+                type: Boolean,
+                default: false
+            },
+            deleteText: {
+                type: String,
+                required: false,
+                default: null
             }
         },
         data() {

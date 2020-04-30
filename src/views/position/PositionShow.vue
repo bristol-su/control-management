@@ -8,13 +8,19 @@
                         {{position.id}}
                     </v-data-list-item>
 
-                    <v-data-list-item title="Name">
-                        {{positionName}}
-                    </v-data-list-item>
+                    <v-data-list-item-editable
+                        title="Name"
+                        :value="positionName"
+                        @update="update({name: $event})">
 
-                    <v-data-list-item title="Description">
-                        {{position.data.description}}
-                    </v-data-list-item>
+                    </v-data-list-item-editable>
+
+                    <v-data-list-item-editable
+                            title="Description"
+                            :value="position.data.description"
+                            @update="update({description: $event})">
+
+                    </v-data-list-item-editable>
 
                 </v-data-list>
 
@@ -22,20 +28,31 @@
             <b-col cols="8">
                 <b-row>
                     <b-col>
-                        <b-card title="Roles" sub-title="Roles that have the position">
-                            <b-card-text>
-                                <position-roles :position-id="position.id"></position-roles>
-                            </b-card-text>
-                        </b-card>
+                        <v-card title="Roles" sub-title="Roles that have the position">
+                            <template v-slot:icons>
+                                <router-link
+                                        :to="{name: 'position-role', params: {positionId: position.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+                            <v-position-roles :position-id="position.id"></v-position-roles>
+                        </v-card>
                     </b-col>
                 </b-row>
                 <b-row>
                     <b-col>
-                        <b-card title="Tags" sub-title="Tags the position is tagged with">
-                            <b-card-text>
-                                <position-tags :position-id="position.id"></position-tags>
-                            </b-card-text>
-                        </b-card>
+                        <v-card title="Tags" sub-title="Tags the position is tagged with">
+                            <template v-slot:icons>
+                                <router-link :to="{ name: 'create-position-tag', params: { positionId: position.id } }">
+                                    <v-button-add></v-button-add>
+                                </router-link>
+                                <router-link
+                                        :to="{name: 'position-tag', params: {positionId: position.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+                            <v-position-tags :position-id="position.id"></v-position-tags>
+                        </v-card>
                     </b-col>
                 </b-row>
             </b-col>
@@ -47,22 +64,26 @@
     import TheTitle from "../../components/common/TheTitle";
     import VDataList from "../../components/common/VDataList";
     import VDataListItem from "../../components/common/VDataListItem";
-    import PositionTags from "../../components/position/PositionTags";
-    import PositionRoles from "../../components/position/PositionRoles";
+    import VPositionTags from "../../components/position/VPositionTags";
+    import VPositionRoles from "../../components/position/VPositionRoles";
+    import {mapActions, mapState} from "vuex";
+    import VDataListItemEditable from "../../components/common/VDataListItemEditable";
+    import VCard from "../../components/common/VCard";
+    import VButtonAdd from "../../components/common/VButtonAdd";
 
     export default {
         name: "PositionShow",
-        components: {PositionRoles, PositionTags, VDataListItem, VDataList, TheTitle},
-        props: {
-            position: {
-                required: true,
-                type: Object
-            }
-        },
+        components: {
+            VButtonAdd,
+            VCard, VDataListItemEditable, VPositionRoles, VPositionTags, VDataListItem, VDataList, TheTitle},
         computed: {
+            ...mapState('position', ['position']),
             positionName() {
                 return this.position.data.name;
             }
+        },
+        methods: {
+            ...mapActions('position', ['update'])
         }
     }
 </script>

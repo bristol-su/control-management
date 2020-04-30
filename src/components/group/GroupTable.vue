@@ -1,22 +1,25 @@
 <template>
-    <b-table :fields="fields" :items="groups" :busy="loading">
+    <b-table small :fields="fields" :items="groups" :busy="loading">
         <template v-slot:top-row>
             <slot name="top-row"></slot>
         </template>
         <template v-slot:cell(actions)="data">
-            <b-button
-                size="sm"
-                variant="outline-secondary"
-                @click="$router.push({ name: 'group', params: { groupId: data.item.id }})">
-                View
-            </b-button>
+            <v-button-view
+                @view="$router.push({ name: 'group', params: { groupId: data.item.id }})">
+            </v-button-view>
+            <v-button-delete :delete-text="deleteText" v-if="deletable" @delete="$emit('delete', data.item.id)">
+
+            </v-button-delete>
         </template>
     </b-table>
 </template>
 
 <script>
+    import VButtonView from "../common/VButtonView";
+    import VButtonDelete from "../common/VButtonDelete";
     export default {
         name: "GroupTable",
+        components: {VButtonDelete, VButtonView},
         props: {
             groups: {
                 type: Array,
@@ -25,10 +28,17 @@
                 }
             },
             loading: {
-                props: {
-                    type: Boolean,
-                    default: false
-                }
+                type: Boolean,
+                default: false
+            },
+            deletable: {
+                type: Boolean,
+                default: false
+            },
+            deleteText: {
+                type: String,
+                required: false,
+                default: null
             }
         },
         data() {

@@ -1,6 +1,7 @@
 <template>
     <div id="control-app">
         <b-container>
+            <the-notifications></the-notifications>
             <the-header></the-header>
             <b-row>
                 <b-col>
@@ -15,8 +16,9 @@
 
 <script>
     import TheHeader from "./components/common/TheHeader";
+    import TheNotifications from "./components/common/TheNotifications";
     export default {
-        components: {TheHeader}
+        components: {TheNotifications, TheHeader}
     }
 </script>
 

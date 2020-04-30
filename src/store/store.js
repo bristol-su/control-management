@@ -13,6 +13,7 @@ import * as userTag from './modules/userTag.js'
 import * as groupTag from './modules/groupTag.js'
 import * as roleTag from './modules/roleTag.js'
 import * as positionTag from './modules/positionTag.js'
+import * as notifications from './modules/notifications';
 
 Vue.use(Vuex)
 
@@ -29,6 +30,7 @@ export default new Vuex.Store({
       userTag,
       groupTag,
       roleTag,
-      positionTag
+      positionTag,
+      notifications
   }
 })

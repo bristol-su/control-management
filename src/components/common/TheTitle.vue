@@ -3,6 +3,7 @@
         <b-col cols="2"></b-col>
         <b-col cols="8"><h1 style="text-align: center">{{title}}</h1></b-col>
         <b-col cols="2">
+            <slot></slot>
         </b-col>
     </b-row>
 </template>

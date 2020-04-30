@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_POSITION_TAG_CATEGORY_COUNT', response.data.total);
                 commit('SET_POSITION_TAG_CATEGORY_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadPositionTagCategory({commit, state, getters}, positionTagCategoryId) {
         if(positionTagCategoryId === state.positionTagCategory.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().positionTagCategory().update(state.positionTagCategory.id, attributes)
+            .then(response => {
+                commit('SET_POSITION_TAG_CATEGORY', response.data);
+                commit('RECORD_LOADED_PositionTagCategories', [response.data]);
+                return response.data;
+            })
     }
 }
 

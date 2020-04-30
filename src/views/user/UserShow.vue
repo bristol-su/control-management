@@ -12,30 +12,62 @@
                         {{user.data.id}}
                     </v-data-list-item>
 
-                    <v-data-list-item title="First Name">
-                        {{user.data.first_name}}
-                    </v-data-list-item>
+                    <v-data-list-item-editable
+                            title="First Name"
+                            :value="user.data.first_name"
+                            @update="update({first_name: $event})">
 
-                    <v-data-list-item title="Last Name">
-                        {{user.data.last_name}}
-                    </v-data-list-item>
+                    </v-data-list-item-editable>
 
-                    <v-data-list-item title="Preferred Name">
-                        {{user.data.preferred_name}}
-                    </v-data-list-item>
+                    <v-data-list-item-editable
+                            title="Last Name"
+                            :value="user.data.last_name"
+                            @update="update({last_name: $event})">
 
-                    <v-data-list-item title="Email">
-                        <span v-if="userEmail">
-                            <a :href="'mailto:' + userEmail">{{userEmail}}</a>
-                        </span>
-                        <span v-else>
-                            No email on record
-                        </span>
-                    </v-data-list-item>
+                    </v-data-list-item-editable>
 
-                    <v-data-list-item title="Date of Birth">
+                    <v-data-list-item-editable
+                            title="Preferred Name"
+                            :value="user.data.preferred_name"
+                            @update="update({preferred_name: $event})">
+
+                    </v-data-list-item-editable>
+
+                    <v-data-list-item-editable
+                            title="Email"
+                            :value="userEmail"
+                            @update="update({email: $event})">
+
+                        <div>
+                            <span v-if="userEmail">
+                                <a :href="'mailto:' + userEmail">{{userEmail}}</a>
+                            </span>
+                            <span v-else>
+                                No email on record
+                            </span>
+                        </div>
+
+                        <template v-slot:editing="{newValue, updateValue}">
+                            <b-input type="email" :value="newValue" @input="updateValue"></b-input>
+                        </template>
+                    </v-data-list-item-editable>
+
+                    <v-data-list-item-editable
+                            title="Date of Birth"
+                            :value="formattedUserDateOfBirth"
+                            @update="formattedUserDateOfBirth = $event">
+
                         {{userDateOfBirth | date}}
-                    </v-data-list-item>
+
+                        <template v-slot:editing="{newValue, updateValue}">
+                            <b-form-datepicker
+                                    :value="newValue"
+                                    @input="updateValue"
+                                    class="mb-2">
+
+                            </b-form-datepicker>
+                        </template>
+                    </v-data-list-item-editable>
 
                     <v-data-list-item title="Age">
                         {{userDateOfBirth | age}}
@@ -45,31 +77,60 @@
 
             </b-col>
             <b-col cols="8">
-                <b-row>
+                <b-row class="my-3">
                     <b-col>
-                        <b-card title="Memberships" sub-title="Groups the user is a member of">
-                            <b-card-text>
-                                <user-memberships :user-id="user.id"></user-memberships>
-                            </b-card-text>
-                        </b-card>
+                        <v-card
+                            title="Memberships"
+                            sub-title="Groups the user is a member of">
+
+                            <template v-slot:icons>
+                                <router-link :to="{ name: 'create-user-membership', params: { userId: user.id } }">
+                                    <v-button-add></v-button-add>
+                                </router-link>
+
+                                <router-link
+                                        :to="{name: 'user-membership', params: {userId: user.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+
+                            <v-user-memberships :user-id="user.id"></v-user-memberships>
+
+                        </v-card>
                     </b-col>
                 </b-row>
-                <b-row>
+                <b-row class="my-3">
                     <b-col>
-                        <b-card title="Roles" sub-title="Positions the user holds in a group">
-                            <b-card-text>
-                                <user-roles :user-id="user.id"></user-roles>
-                            </b-card-text>
-                        </b-card>
+                        <v-card title="Roles" sub-title="Positions the user holds in a group">
+                            <template v-slot:icons>
+                                <router-link :to="{ name: 'create-user-role', params: { userId: user.id } }">
+                                    <v-button-add></v-button-add>
+                                </router-link>
+
+                                <router-link
+                                        :to="{name: 'user-role', params: {userId: user.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+                            <v-user-roles :user-id="user.id"></v-user-roles>
+                        </v-card>
                     </b-col>
                 </b-row>
-                <b-row>
+                <b-row class="my-3">
                     <b-col>
-                        <b-card title="Tags" sub-title="Tags the user is tagged with">
-                            <b-card-text>
-                                <user-tags :user-id="user.id"></user-tags>
-                            </b-card-text>
-                        </b-card>
+                        <v-card title="Tags" sub-title="Tags the user is tagged with">
+                            <template v-slot:icons>
+                                <router-link :to="{ name: 'create-user-tag', params: { userId: user.id } }">
+                                    <v-button-add></v-button-add>
+                                </router-link>
+
+                                <router-link
+                                        :to="{name: 'user-tag', params: {userId: user.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+                            <v-user-tags :user-id="user.id"></v-user-tags>
+                        </v-card>
                     </b-col>
                 </b-row>
             </b-col>
@@ -82,36 +143,49 @@
     import moment from 'moment';
     import VDataList from "../../components/common/VDataList";
     import VDataListItem from "../../components/common/VDataListItem";
-    import UserMemberships from "../../components/user/UserMemberships";
-    import UserRoles from "../../components/user/UserRoles";
-    import UserTags from "../../components/user/UserTags";
+    import VUserMemberships from "../../components/user/VUserMemberships";
+    import VUserRoles from "../../components/user/VUserRoles";
+    import VUserTags from "../../components/user/VUserTags";
+    import {mapActions, mapState} from "vuex";
+    import VDataListItemEditable from "../../components/common/VDataListItemEditable";
+    import VCard from "../../components/common/VCard";
+    import VButtonAdd from "../../components/common/VButtonAdd";
 
     export default {
         name: "UserShow",
-        components: {UserTags, UserRoles, UserMemberships, VDataListItem, VDataList, TheTitle},
-        props: {
-            user: {
-                required: true,
-                type: Object
-            }
+        components: {
+            VButtonAdd,
+            VCard,
+            VDataListItemEditable,
+            VUserTags,
+            VUserRoles,
+            VUserMemberships,
+            VDataListItem,
+            VDataList,
+            TheTitle
         },
 
         filters: {
             date(val) {
-                if(val) {
+                if (val) {
                     return moment(val).format('MMMM Do YYYY')
                 }
                 return 'No date of birth found';
             },
             age(val) {
-                if(val) {
+                if (val) {
                     return moment().diff(moment(val), 'years');
                 }
                 return 'No date of birth found';
             },
         },
 
+        methods: {
+            ...mapActions('user', ['update'])
+        },
+
         computed: {
+            ...mapState('user', ['user']),
             userName() {
                 return this.user.data.first_name + ' ' + this.user.data.last_name;
             },
@@ -120,6 +194,17 @@
             },
             userDateOfBirth() {
                 return this.user.data.dob;
+            },
+            formattedUserDateOfBirth: {
+                get: function () {
+                    if (this.userDateOfBirth) {
+                        return moment(this.userDateOfBirth).format('YYYY-MM-DD');
+                    }
+                    return null;
+                },
+                set: function (val) {
+                    this.update({dob: moment(val).format('DD-MM-YYYY')})
+                }
             }
         }
     }

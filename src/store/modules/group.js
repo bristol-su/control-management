@@ -26,10 +26,13 @@ export const mutations = {
     },
     RECORD_LOADED_GROUPS(state, groups) {
         for (let group of groups) {
-            if(state.loadedGroupIds.indexOf(group.id) === -1) {
-                state.loadedGroups.push(group);
+            let index = state.loadedGroupIds.indexOf(group.id)
+            if(index !== -1) {
+                state.loadedGroups.splice(index, 1);
+            } else {
                 state.loadedGroupIds.push(group.id);
             }
+            state.loadedGroups.push(group);
         }
     }
 }
@@ -41,9 +44,6 @@ export const actions = {
                 commit('SET_GROUPS', response.data.data)
                 commit('SET_GROUP_COUNT', response.data.total);
                 commit('SET_GROUP_PAGE_COUNT', response.data.last_page);
-            })
-            .catch(error => {
-                console.log(error);
             });
     },
     searchGroups({commit}, {search, page, perPage}) {
@@ -53,9 +53,6 @@ export const actions = {
                 commit('SET_GROUP_COUNT', response.data.total);
                 commit('SET_GROUP_PAGE_COUNT', response.data.last_page);
                 commit('RECORD_LOADED_GROUPS', response.data.data);
-            })
-            .catch(error => {
-                console.log(error);
             })
     },
     loadGroup({commit, state, getters}, groupId) {
@@ -75,6 +72,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().group().update(state.group.id, attributes)
+            .then(response => {
+                commit('SET_GROUP', response.data);
+                commit('RECORD_LOADED_GROUPS', [response.data]);
+                return response.data;
+            })
     }
 }
 

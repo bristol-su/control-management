@@ -1,6 +1,10 @@
 <template>
     <div>
-        <the-title title="Groups"></the-title>
+        <the-title title="Groups">
+            <router-link :to="{name: 'create-group'}">
+                <v-button-create title="Create Group"></v-button-create>
+            </router-link>
+        </the-title>
         <b-row>
             <b-col cols="12">
                 <group-table
@@ -39,6 +43,7 @@
     import TheTitle from "../../components/common/TheTitle";
     import GroupTable from "../../components/group/GroupTable";
     import {cloneDeep, debounce} from 'lodash';
+    import VButtonCreate from "../../components/common/VButtonCreate";
 
     function loadGroups(page, perPage) {
         return store.dispatch('group/loadGroups', {
@@ -113,6 +118,7 @@
             }
         },
         components: {
+            VButtonCreate,
             GroupTable,
             TheTitle,
             VPaginationNav

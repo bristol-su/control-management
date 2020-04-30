@@ -7,8 +7,6 @@ export const state = {
     positionCount: 0,
     positionPageCount: 0,
     position: {},
-    positionTags: [],
-    positionRoles: [],
     loadedPositions: [],
     loadedPositionIds: []
 }
@@ -26,18 +24,15 @@ export const mutations = {
     SET_POSITION(state, position) {
         state.position = position;
     },
-    SET_POSITION_TAGS(state, tags) {
-        state.positionTags = tags;
-    },
-    SET_POSITION_ROLES(state, roles) {
-        state.positionRoles = roles;
-    },
     RECORD_LOADED_POSITIONS(state, positions) {
         for (let position of positions) {
-            if(state.loadedPositionIds.indexOf(position.id) === -1) {
-                state.loadedPositions.push(position);
+            let index = state.loadedPositionIds.indexOf(position.id)
+            if(index !== -1) {
+                state.loadedPositions.splice(index, 1);
+            } else {
                 state.loadedPositionIds.push(position.id);
             }
+            state.loadedPositions.push(position);
         }
     }
 }
@@ -51,9 +46,6 @@ export const actions = {
                 commit('SET_POSITION_PAGE_COUNT', response.data.last_page);
                 commit('RECORD_LOADED_POSITIONS', response.data.data);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     searchPositions({commit}, {search, page, perPage}) {
         return ControlService.getService().position().getAllWhere(search, page, perPage)
@@ -61,9 +53,6 @@ export const actions = {
                 commit('SET_POSITIONS', response.data.data)
                 commit('SET_POSITION_COUNT', response.data.total);
                 commit('SET_POSITION_PAGE_COUNT', response.data.last_page);
-            })
-            .catch(error => {
-                console.log(error);
             })
     },
     loadPosition({commit, state, getters}, positionId) {
@@ -84,18 +73,14 @@ export const actions = {
             })
         }
     },
-    loadPositionRoles({commit}, positionId) {
-        return ControlService.getService().position().roles(positionId).then(response => {
-            commit('SET_POSITION_ROLES', response.data)
-            return response.data
-        })
-    },
-    loadPositionTags({commit}, positionId) {
-        return ControlService.getService().position().tags(positionId).then(response => {
-            commit('SET_POSITION_TAGS', response.data)
-            return response.data
-        })
-    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().position().update(state.position.id, attributes)
+            .then(response => {
+                commit('SET_POSITION', response.data);
+                commit('RECORD_LOADED_POSITIONS', [response.data]);
+                return response.data;
+            })
+    }
 }
 
 export const getters = {

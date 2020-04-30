@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_GROUP_TAG_CATEGORY_COUNT', response.data.total);
                 commit('SET_GROUP_TAG_CATEGORY_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadGroupTagCategory({commit, state, getters}, groupTagCategoryId) {
         if(groupTagCategoryId === state.groupTagCategory.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().groupTagCategory().update(state.groupTagCategory.id, attributes)
+            .then(response => {
+                commit('SET_GROUP_TAG_CATEGORY', response.data);
+                commit('RECORD_LOADED_GroupTagCategories', [response.data]);
+                return response.data;
+            })
     }
 }
 

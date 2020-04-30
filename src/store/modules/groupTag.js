@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_GROUP_TAG_COUNT', response.data.total);
                 commit('SET_GROUP_TAG_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadGroupTag({commit, state, getters}, groupTagId) {
         if(groupTagId === state.groupTag.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().groupTag().update(state.groupTag.id, attributes)
+            .then(response => {
+                commit('SET_GROUP_TAG', response.data);
+                commit('RECORD_LOADED_GROUP_TAGS', [response.data]);
+                return response.data;
+            })
     }
 }
 

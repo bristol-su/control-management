@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_ROLE_TAG_COUNT', response.data.total);
                 commit('SET_ROLE_TAG_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadRoleTag({commit, state, getters}, roleTagId) {
         if(roleTagId === state.roleTag.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().roleTag().update(state.roleTag.id, attributes)
+            .then(response => {
+                commit('SET_ROLE_TAG', response.data);
+                commit('RECORD_LOADED_ROLE_TAGS', [response.data]);
+                return response.data;
+            })
     }
 }
 

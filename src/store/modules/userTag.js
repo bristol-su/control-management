@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_USER_TAG_COUNT', response.data.total);
                 commit('SET_USER_TAG_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadUserTag({commit, state, getters}, userTagId) {
         if(userTagId === state.userTag.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().userTag().update(state.userTag.id, attributes)
+            .then(response => {
+                commit('SET_USER_TAG', response.data);
+                commit('RECORD_LOADED_USER_TAGS', [response.data]);
+                return response.data;
+            })
     }
 }
 

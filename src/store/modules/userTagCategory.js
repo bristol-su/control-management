@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_USER_TAG_CATEGORY_COUNT', response.data.total);
                 commit('SET_USER_TAG_CATEGORY_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadUserTagCategory({commit, state, getters}, userTagCategoryId) {
         if(userTagCategoryId === state.userTagCategory.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().userTagCategory().update(state.userTagCategory.id, attributes)
+            .then(response => {
+                commit('SET_USER_TAG_CATEGORY', response.data);
+                commit('RECORD_LOADED_UserTagCategories', [response.data]);
+                return response.data;
+            })
     }
 }
 

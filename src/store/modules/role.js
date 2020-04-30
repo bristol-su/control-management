@@ -26,10 +26,13 @@ export const mutations = {
     },
     RECORD_LOADED_ROLES(state, roles) {
         for (let role of roles) {
-            if(state.loadedRoleIds.indexOf(role.id) === -1) {
-                state.loadedRoles.push(role);
+            let index = state.loadedRoleIds.indexOf(role.id)
+            if(index !== -1) {
+                state.loadedRoles.splice(index, 1);
+            } else {
                 state.loadedRoleIds.push(role.id);
             }
+            state.loadedRoles.push(role);
         }
     }
 }
@@ -42,9 +45,6 @@ export const actions = {
                 commit('SET_ROLE_COUNT', response.data.total);
                 commit('SET_ROLE_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadRole({commit, state, getters}, roleId) {
         if(roleId === state.role.id) {
@@ -63,6 +63,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().role().update(state.role.id, attributes)
+            .then(response => {
+                commit('SET_ROLE', response.data);
+                commit('RECORD_LOADED_ROLES', [response.data]);
+                return response.data;
+            })
     }
 }
 

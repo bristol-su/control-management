@@ -32,9 +32,6 @@ export const actions = {
                 commit('SET_USER_COUNT', response.data.total);
                 commit('SET_USER_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     searchUsers({commit}, {search, page, perPage}) {
         return ControlService.getService().user().getAllWhere(search, page, perPage)
@@ -49,7 +46,6 @@ export const actions = {
                     commit('SET_USER_COUNT', 0);
                     commit('SET_USER_PAGE_COUNT', 1);
                 }
-                console.log(error);
             })
     },
     loadUser({commit, state, getters}, userId) {
@@ -69,16 +65,13 @@ export const actions = {
             })
         }
     },
-    loadUserRoles(userId) {
-        return ControlService.getService().user().roles(userId).then(response => {
-            return response.data
-        })
-    },
-    loadUserTags(userId) {
-        return ControlService.getService().user().tags(userId).then(response => {
-            return response.data
-        })
-    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().user().update(state.user.id, attributes)
+            .then(response => {
+                commit('SET_USER', response.data);
+                return response.data;
+            })
+    }
 }
 
 export const getters = {

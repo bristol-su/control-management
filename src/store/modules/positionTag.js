@@ -42,9 +42,6 @@ export const actions = {
                 commit('SET_POSITION_TAG_COUNT', response.data.total);
                 commit('SET_POSITION_TAG_PAGE_COUNT', response.data.last_page);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     loadPositionTag({commit, state, getters}, positionTagId) {
         if(positionTagId === state.positionTag.id) {
@@ -63,6 +60,14 @@ export const actions = {
                 return response.data
             })
         }
+    },
+    update({commit, state}, attributes) {
+        return ControlService.getService().positionTag().update(state.positionTag.id, attributes)
+            .then(response => {
+                commit('SET_POSITION_TAG', response.data);
+                commit('RECORD_LOADED_POSITION_TAGS', [response.data]);
+                return response.data;
+            })
     }
 }
 

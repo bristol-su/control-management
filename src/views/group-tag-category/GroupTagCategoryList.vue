@@ -1,6 +1,10 @@
 <template>
     <div>
-        <the-title title="Group Tags - Categories"></the-title>
+        <the-title title="Group Tags - Categories">
+            <router-link :to="{name: 'create-groupTagCategory'}">
+                <v-button-create title="Create Group Tag Category"></v-button-create>
+            </router-link>
+        </the-title>
         <b-row>
             <b-col cols="12">
                 <tag-category-table
@@ -28,6 +32,7 @@
     import store from '../../store/store';
     import TheTitle from "../../components/common/TheTitle";
     import TagCategoryTable from "../../components/tag-category/TagCategoryTable";
+    import VButtonCreate from "../../components/common/VButtonCreate";
 
     function getPageGroupTagCategories(routeTo, next) {
         const currentPage = parseInt(routeTo.query.page) || 1;
@@ -57,6 +62,7 @@
             },
         },
         components: {
+            VButtonCreate,
             TagCategoryTable,
             TheTitle,
             VPaginationNav

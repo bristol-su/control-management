@@ -1,6 +1,10 @@
 <template>
     <div>
-        <the-title title="Role Tags"></the-title>
+        <the-title title="Role Tags">
+            <router-link :to="{name: 'create-roleTag'}">
+                <v-button-create title="Create Role Tag"></v-button-create>
+            </router-link>
+        </the-title>
         <b-row>
             <b-col cols="12">
                 <tag-table
@@ -28,6 +32,7 @@
     import store from '../../store/store';
     import TheTitle from "../../components/common/TheTitle";
     import TagTable from "../../components/tag/TagTable";
+    import VButtonCreate from "../../components/common/VButtonCreate";
 
     function getPageRoleTags(routeTo, next) {
         const currentPage = parseInt(routeTo.query.page) || 1;
@@ -57,6 +62,7 @@
             },
         },
         components: {
+            VButtonCreate,
             TagTable,
             TheTitle,
             VPaginationNav

@@ -8,28 +8,40 @@
                         {{roleTagCategory.id}}
                     </v-data-list-item>
 
-                    <v-data-list-item title="Name">
-                        {{roleTagCategory.name}}
-                    </v-data-list-item>
+                    <v-data-list-item-editable
+                            title="Name"
+                            :value="roleTagCategory.name"
+                            @update="update({name: $event})">
 
-                    <v-data-list-item title="Description">
-                        {{roleTagCategory.description}}
-                    </v-data-list-item>
+                    </v-data-list-item-editable>
 
-                    <v-data-list-item title="Reference">
-                        {{roleTagCategory.reference}}
-                    </v-data-list-item>
+                    <v-data-list-item-editable
+                            title="Description"
+                            :value="roleTagCategory.description"
+                            @update="update({description: $event})">
+
+                    </v-data-list-item-editable>
+
+                    <v-data-list-item-editable
+                            title="Reference"
+                            :value="roleTagCategory.reference"
+                            @update="update({reference: $event})">
+                    </v-data-list-item-editable>
                 </v-data-list>
 
             </b-col>
             <b-col cols="8">
                 <b-row>
                     <b-col>
-                        <b-card title="Tags" sub-title="Tags that belong to the category">
-                            <b-card-text>
-                                <role-tag-category-tags :role-tag-category-id="roleTagCategory.id"></role-tag-category-tags>
-                            </b-card-text>
-                        </b-card>
+                        <v-card title="Tags" sub-title="Tags that belong to the category">
+                            <template v-slot:icons>
+                                <router-link
+                                        :to="{name: 'roleTagCategory-tag', params: {roleTagCategoryId: roleTagCategory.id}}">
+                                    <i class="fa fa-external-link-alt"></i>
+                                </router-link>
+                            </template>
+                            <v-role-tag-category-tags :role-tag-category-id="roleTagCategory.id"></v-role-tag-category-tags>
+                        </v-card>
                     </b-col>
                 </b-row>
             </b-col>
@@ -43,16 +55,19 @@
     import TheTitle from "../../components/common/TheTitle";
     import VDataList from "../../components/common/VDataList";
     import VDataListItem from "../../components/common/VDataListItem";
-    import RoleTagCategoryTags from "../../components/tag-category/RoleTagCategoryTags";
+    import VRoleTagCategoryTags from "../../components/tag-category/VRoleTagCategoryTags";
+    import {mapActions, mapState} from "vuex";
+    import VDataListItemEditable from "../../components/common/VDataListItemEditable";
+    import VCard from "../../components/common/VCard";
     export default {
         name: "RoleTagCategoryShow",
-        components: {RoleTagCategoryTags, VDataListItem, VDataList, TheTitle},
-        props: {
-            roleTagCategory: {
-                required: true,
-                type: Object
-            }
+        components: {VCard, VDataListItemEditable, VRoleTagCategoryTags, VDataListItem, VDataList, TheTitle},
+        methods: {
+            ...mapActions('roleTagCategory', ['update'])
         },
+        computed: {
+            ...mapState('roleTagCategory', ['roleTagCategory'])
+        }
 
     }
 </script>

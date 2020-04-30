@@ -1,6 +1,10 @@
 <template>
     <div>
-        <the-title title="Positions"></the-title>
+        <the-title title="Positions">
+            <router-link :to="{name: 'create-position'}">
+                <v-button-create title="Create Position"></v-button-create>
+            </router-link>
+        </the-title>
         <b-row>
             <b-col cols="12">
                 <position-table
@@ -39,6 +43,7 @@
     import TheTitle from "../../components/common/TheTitle";
     import PositionTable from "../../components/position/PositionTable";
     import {cloneDeep, debounce} from 'lodash';
+    import VButtonCreate from "../../components/common/VButtonCreate";
 
     function loadPositions(page, perPage) {
         return store.dispatch('position/loadPositions', {
@@ -113,6 +118,7 @@
             }
         },
         components: {
+            VButtonCreate,
             PositionTable,
             TheTitle,
             VPaginationNav

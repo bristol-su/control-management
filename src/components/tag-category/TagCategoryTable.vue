@@ -1,22 +1,21 @@
 <template>
-    <b-table :items="categories" :fields="fields" :busy="loading">
+    <b-table small :items="categories" :fields="fields" :busy="loading">
         <template v-slot:top-row>
             <slot name="top-row"></slot>
         </template>
         <template v-slot:cell(actions)="data">
-            <b-button
-                    size="sm"
-                    variant="outline-secondary"
-                    @click="$router.push(generateViewLink(data.item.id))">
-                View
-            </b-button>
+            <v-button-view
+                    @view="$router.push(generateViewLink(data.item.id))">
+            </v-button-view>
         </template>
     </b-table>
 </template>
 
 <script>
+    import VButtonView from "../common/VButtonView";
     export default {
         name: "TagCategoryTable",
+        components: {VButtonView},
         props: {
             categories: {
                 type: Array,

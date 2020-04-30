@@ -12,19 +12,18 @@
             </span>
         </template>
         <template v-slot:cell(actions)="data">
-            <b-button
-                    size="sm"
-                    variant="outline-secondary"
-                    @click="$router.push(generateViewLink(data.item.id))">
-                View
-            </b-button>
+            <v-button-view
+                    @view="$router.push(generateViewLink(data.item.id))">
+            </v-button-view>
         </template>
     </b-table>
 </template>
 
 <script>
+    import VButtonView from "../common/VButtonView";
     export default {
         name: "TagTable",
+        components: {VButtonView},
         props: {
             tags: {
                 type: Array,

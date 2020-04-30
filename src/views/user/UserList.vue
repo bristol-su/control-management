@@ -1,6 +1,10 @@
 <template>
     <div>
-        <the-title title="Users"></the-title>
+        <the-title title="Users">
+            <router-link :to="{name: 'create-user'}">
+                <v-button-create title="Create User"></v-button-create>
+            </router-link>
+        </the-title>
         <b-row>
             <b-col cols="12">
                 <user-table
@@ -42,6 +46,7 @@
     import TheTitle from "../../components/common/TheTitle";
     import UserTable from "../../components/user/UserTable";
     import {cloneDeep, debounce} from 'lodash';
+    import VButtonCreate from "../../components/common/VButtonCreate";
 
     function loadUsers(page, perPage) {
         return store.dispatch('user/loadUsers', {
@@ -108,6 +113,7 @@
             }
         },
         components: {
+            VButtonCreate,
             UserTable,
             TheTitle,
             VPaginationNav
@@ -127,13 +133,6 @@
                 loading: false,
             }
         },
-        methods: {
-            searchWith: function(key, value) {
-                let route = cloneDeep(this.route);
-                route.query[key] = value;
-                this.$router.push(route);
-            }
-        },
         computed: {
             ...mapState('user', {
                 users: 'users',
@@ -150,24 +149,47 @@
                 get: function() {
                     return this.search.first_name;
                 },
-                set: debounce(function(val) {
-                    this.searchWith('first_name', val);
-                }, 1000)
+                set: function(val) {
+                    let searchParams = this.searchParams;
+                    searchParams.first_name = val;
+                    this.searchParams = searchParams;
+                }
             },
             lastName: {
                 get: function() {
                     return this.search.last_name;
                 },
-                set: debounce(function(val) {
-                    this.searchWith('last_name', val);
-                }, 1000)
+                set: function(val) {
+                    let searchParams = this.searchParams;
+                    searchParams.last_name = val;
+                    this.searchParams = searchParams;
+                }
             },
             email: {
                 get: function() {
                     return this.search.email;
                 },
-                set: debounce(function(val) {
-                    this.searchWith('email', val);
+                set: function(val) {
+                    let searchParams = this.searchParams;
+                    searchParams.email = val;
+                    this.searchParams = searchParams;
+                }
+            },
+            searchParams: {
+                get: function() {
+                    return this.search;
+                },
+                set: debounce(function(params) {
+                    let route = cloneDeep(this.route);
+                    Object.keys(params).forEach(key => {
+                        let value = params[key];
+                        if(value) {
+                            route.query[key] = value;
+                        } else {
+                            delete route.query[key];
+                        }
+                    })
+                    this.$router.push(route);
                 }, 1000)
             }
         }
