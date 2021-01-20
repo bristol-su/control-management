@@ -49,7 +49,7 @@
                     .then(() => {
                         Notify.success('Role given to user');
                         this.$router.push({
-                            name: 'user', params: {userId: this.userId}
+                            name: 'role', params: {roleId: this.roleId}
                         });
                     })
             }
