@@ -11,8 +11,8 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="email-group" label="Role Name:" label-for="email" description="A generic email for the role">
-                <b-form-input
+            <b-form-group id="email-group" label="Role Email:" label-for="email" description="A generic email for the role">
+            <b-form-input
                         type="email"
                         id="email"
                         v-model="form.email"
