@@ -3,7 +3,7 @@
         <the-title title="Give a User a Role">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
             <b-tabs content-class="mt-3" fill v-model="tab">
                 <b-tab title="Existing Role" active>
                     <v-find-role v-model="roleIdFind"></v-find-role>

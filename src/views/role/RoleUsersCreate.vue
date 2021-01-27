@@ -3,7 +3,7 @@
         <the-title title="Assign user to a role">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
             <b-form-group id="user-id-group" label="User:" label-for="user-select" description="Search for the user to add to the role by email">
                 <v-user-dropdown id="user-select" v-model="userId"></v-user-dropdown>
             </b-form-group>

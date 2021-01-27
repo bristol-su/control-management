@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form @submit="create" v-if="role === null">
+        <b-form @submit.prevent="create" v-if="role === null">
 
             <b-form-group id="role-name-group" label="Role Name:" label-for="role-name" description="A custom name for the role">
                 <b-form-input

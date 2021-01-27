@@ -3,7 +3,7 @@
         <the-title title="Tag a Role">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <v-find-role v-model="roleId"></v-find-role>
 

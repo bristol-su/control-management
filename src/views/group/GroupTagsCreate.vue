@@ -3,7 +3,7 @@
         <the-title title="Tag Group">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="tag-group" label="Tag:" label-for="tag" description="Tag to tag the group with">
                     <v-group-tag-dropdown v-model="tagId"></v-group-tag-dropdown>
