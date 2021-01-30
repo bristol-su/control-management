@@ -3,7 +3,7 @@
         <the-title title="Tag a Position">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="position-group" label="Position:" label-for="position" description="Position to add the tag to">
                 <v-position-dropdown id="position" v-model="positionId"></v-position-dropdown>

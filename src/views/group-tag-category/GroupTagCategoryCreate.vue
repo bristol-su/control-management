@@ -1,7 +1,7 @@
 <template>
     <div>
         <the-title title="Create a Group Tag Category"></the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="name-group" label="Tag Category Name:" label-for="name" description="A name for the tag category">
                 <b-form-input

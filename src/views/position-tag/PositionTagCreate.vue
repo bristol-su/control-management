@@ -1,7 +1,7 @@
 <template>
     <div>
         <the-title title="Create a Position Tag"></the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="name-group" label="Tag Name:" label-for="name" description="A name for the tag">
                 <b-form-input

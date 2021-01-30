@@ -1,7 +1,7 @@
 <template>
     <div>
         <the-title title="Create a User"></the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="first-name-group" label="User First Name:" label-for="first-name" description="The first name of the user">
                 <b-form-input

@@ -3,7 +3,7 @@
         <the-title title="Add Member">
 
         </the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="user-group" label="User:" label-for="user" description="User to make a member of the group">
                     <v-user-dropdown v-model="userId" id="user"></v-user-dropdown>
