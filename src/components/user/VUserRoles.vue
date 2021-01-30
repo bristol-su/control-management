@@ -67,7 +67,7 @@
                     {key: 'data.role_name', label: 'Role Name'},
                     {key: 'position_id', label: 'Position'},
                     {key: 'group_id', label: 'Group'},
-                    {key: 'created_at', label: 'Created At'},
+                    {key: 'created_at', label: 'Created At', sortable: true, sortDirection: 'asc'},
                     {key: 'actions', label: ''}
                 ],
                 loading: false,

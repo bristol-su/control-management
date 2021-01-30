@@ -1,7 +1,7 @@
 <template>
     <div>
         <the-title title="Create a Position"></the-title>
-        <b-form @submit="create">
+        <b-form @submit.prevent="create">
 
             <b-form-group id="name-position" label="Position Name:" label-for="name" description="A name for the position">
                 <b-form-input
